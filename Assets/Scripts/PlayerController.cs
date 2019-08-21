@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour {
 	public Bounds levelBoundary;
 	public float rotationSpeed;
 	public int startingFuel;
+	public float minBounceVelocity;
 
 	private Vector3 velocity;
 	private Vector3 gravityVector;
@@ -77,12 +78,15 @@ public class PlayerController : MonoBehaviour {
 
 	private void BounceOffGeometry(Collision2D other) {
 		var bounceDirection = other.transform.up;
+		var bounceFactor = velocity.magnitude < minBounceVelocity ? 1 : coefficientOfRestitution;
+		
 		if (Mathf.Approximately(bounceDirection.x, 1)) {
-			velocity.x *= -1 * coefficientOfRestitution;
+			velocity.x *= -1 * bounceFactor;
 		}
 		if (Mathf.Approximately(bounceDirection.y, 1)) {
-			velocity.y *= -1 * coefficientOfRestitution;
+			velocity.y *= -1 * bounceFactor;
 		}
+		if(velocity.y < Mathf.Epsilon)
 //		velocity.x *= -1;
 //		velocity.y *= -1;
 		Debug.LogFormat("collision position is {0}", other.transform.position);
@@ -107,5 +111,13 @@ public class PlayerController : MonoBehaviour {
 				BounceOffGeometry(other);
 			}
 		}
+	}
+
+	private void OnCollisionStay2D(Collision2D other) {
+		var collisionTime = Time.deltaTime;
+		if (collisionTime > 5) {
+			Debug.Log("collision timer reached");
+		}
+		Debug.LogFormat("Colliding with {0}", other.gameObject.name);
 	}
 }

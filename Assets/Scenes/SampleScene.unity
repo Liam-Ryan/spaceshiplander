@@ -647,7 +647,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!61 &742204100
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1190,3 +1190,4 @@ MonoBehaviour:
     m_Extent: {x: 4, y: 4, z: 0}
   rotationSpeed: 1
   startingFuel: 1000
+  minBounceVelocity: 0.05
